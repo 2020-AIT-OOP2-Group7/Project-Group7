@@ -2,41 +2,41 @@
     <head>
         <title>Tower Of Hanoi</title>
         <script>
-            bar = [[1],[2],[3]],
-                  [[],[],[]],
-                  [[],[],[]];
-            took = null;
+        //     bar = [[1],[2],[3]],
+        //           [[],[],[]],
+        //           [[],[],[]];
+        //     took = null;
 
-            function getNum(colNum) {//板を取るところ
-                count = 0;
-                while (took==null && count<=2) {
-                    took =bar[colNum][count];
-                    count+=1;
-                }
-                if(took!=null){
-                    bar[colNum][count-1] = null;
-                }
-                if(count>2){
-                    took = null;
-                }
-            }
+        //     function getNum(colNum) {//板を取るところ
+        //         count = 0;
+        //         while (took==null && count<=2) {
+        //             took =bar[colNum][count];
+        //             count+=1;
+        //         }
+        //         if(took!=null){
+        //             bar[colNum][count-1] = null;
+        //         }
+        //         if(count>2){
+        //             took = null;
+        //         }
+        //     }
 
-            function putNum(took,bar,colNum) {//板を置くところ
-                if (took!=null) {
-                    count = 2;
-                    while (bar[colNum][count]!=null && count>=0) {
-                        count-=1;
-                    }
-                    if(hogehoge=1){ //条件式を書く
-                        bar[colNum][count] = took;
-                    }
-                    took = null;
-                }
-            }
-            function Act(bar) {
+        //     function putNum(took,bar,colNum) {//板を置くところ
+        //         if (took!=null) {
+        //             count = 2;
+        //             while (bar[colNum][count]!=null && count>=0) {
+        //                 count-=1;
+        //             }
+        //             if(hogehoge=1){ //条件式を書く
+        //                 bar[colNum][count] = took;
+        //             }
+        //             took = null;
+        //         }
+        //     }
+        //     function Act(bar) {
                 
-            }
-        </script>
+        //     }
+        // </script>
         <style>
             .active {
                 display: block;
