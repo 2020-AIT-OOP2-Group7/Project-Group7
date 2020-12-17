@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>ライツアウト</title>
+        <script>
+            //マスは最初は5*5にする
+            var current = new Array(25);//今のライト　on1,off-1
+            var select = new Array(25);//選択状況
+
+            //n*nのマス用意する
+            function init(n) {
+                current = new Array(n*n);
+                select = new Array(n*n); 
+                // マス作成
+                document.getElementById("game").innerHTML = "";
+                for (var x=0; x<n; x++) {
+                    for (var y=0; y<n; y++) {
+                        var masu = document.createElement("div");
+                        masu.id = "masu_" + (x+y*n);
+                        masu.style.top = y * 84 + "px";
+                        masu.style.left = x * 84 + "px";
+                        masu.onclick = selectMasu;
+                        masu.className = "on";
+                        document.getElementById("game").appendChild(masu);
+                    }
+                }
+                // 今のライト，選択状況初期化
+                for (var i=0; i<n*n; i++) {
+                    current[i] = 1;
+                    select[i] = 1;
+                }
+            }
+
+            //マスをクリックしたときの処理（現在未実装）
+            function selectMasu(event) {
+                // マスのインデックス取得
+                var index = Number(event.target.id.split("_")[1]);
+            }
+
+        </script>
+        <style>
+            #messgae {color: red;}
+            #game {position: relative;}
+            #game div {
+                position: absolute;
+                line-height: 80px;
+                width: 80px;
+                height: 80px;
+                border: 2px outset gray;
+            }
+            .off {background-color: black;}
+            .on {background-color: blue;}
+        </style>
+    </head>
+    <body onload="init(7)">
+    <p>ライツアウト</p>
+    <div id="game"></div>
+    </body>
+</html>
