@@ -1,17 +1,62 @@
 <html>
     <head>
         <title>Tower Of Hanoi</title>
-        <script></script>
+        <script>
+            bar = [[1],[2],[3]],
+                  [[],[],[]],
+                  [[],[],[]];
+            took = null;
+
+            function getNum(colNum) {//板を取るところ
+                count = 0;
+                while (took==null && count<=2) {
+                    took =bar[colNum][count];
+                    count+=1;
+                }
+                if(took!=null){
+                    bar[colNum][count-1] = null;
+                }
+                if(count>2){
+                    took = null;
+                }
+            }
+
+            function putNum(took,bar,colNum) {//板を置くところ
+                if (took!=null) {
+                    count = 2;
+                    while (bar[colNum][count]!=null && count>=0) {
+                        count-=1;
+                    }
+                    if(hogehoge=1){ //条件式を書く
+                        bar[colNum][count] = took;
+                    }
+                    took = null;
+                }
+            }
+            function Act(bar) {
+                
+            }
+        </script>
+        <style>
+            .active {
+                display: block;
+            }
+
+            .passive {
+                display: none;
+            }
+
+        </style>
     </head>
     <body>
         <h1 align = "center"> Tower Of HANOI</h1>
         <table align="center"><tr align="center"><td align="center">
             <table>
-                <tr><td>■□□</td><td>　　　</td><td>□□□</td><td>　　　</td><td>□□□</td></tr>
-                <tr><td>■■□</td><td>　　　</td><td>□□□</td><td>　　　</td><td>□□□</td></tr>
-                <tr><td>■■■</td><td>　　　</td><td>□□□</td><td>　　　</td><td>□□□</td></tr>
-                <tr><td><input type="button" value="take"></td><td>　　　</td><td><input type="button" value="take"></td><td>　　　</td><td><input type="button" value="take"></td></tr>
-                <tr><td><input type="button" value=" put "></td><td>　　　</td><td><input type="button" value=" put "></td><td>　　　</td><td><input type="button" value=" put "></td></tr>
+                <tr> <td id="b00_1" class="active">■□□</td> <td id="b00_0" class="passive">□□□</td> <td>&emsp;&emsp;&emsp;</td> <td id="b10_1" class="active">■□□</td> <td id="b10_0" class="passive">□□□</td> <td>&emsp;&emsp;&emsp;</td> <td id="b20_1" class="active">■□□</td> <td id="b20_0" class="passive">□□□</td> </tr>
+                <tr> <td id="b01_2" class="passive">■■□</td><td id="b01_1" class="active">■□□</td> <td id="b01_0" class="passive">□□□</td>  <td>&emsp;&emsp;&emsp;</td><td id="b11_2" class="passive">■■□</td> <td id="b11_1" class="active">■□□</td> <td id="b11_0" class="passive">□□□</td> <td>&emsp;&emsp;&emsp;</td><td id="b21_2" class="passive">■■□</td> <td id="b21_1" class="active">■□□</td> <td id="b21_0" class="passive">□□□</td> </tr>
+                <tr> <td id="b02_3" class="passive">■■■</td> <td id="b02_2" class="passive">■■□</td><td id="b02_1" class="active">■□□</td> <td id="b02_0" class="passive">□□□</td>  <td>&emsp;&emsp;&emsp;</td> <td id="b12_3" class="passive">■■■</td> <td id="b12_2" class="passive">■■□</td> <td id="b12_1" class="active">■□□</td> <td id="b12_0" class="passive">□□□</td> <td>&emsp;&emsp;&emsp;</td> <td id="b22_3" class="passive">■■■</td> <td id="b22_2" class="passive">■■□</td> <td id="b22_1" class="active">■□□</td> <td id="b22_0" class="passive">□□□</td> </tr>
+                <tr><td><input type="button" value="take"></td><td>&emsp;&emsp;&emsp;</td><td><input type="button" value="take"></td><td>&emsp;&emsp;&emsp;</td><td><input type="button" value="take"></td></tr>
+                <tr><td><input type="button" value="&nbsp;put&nbsp;"></td><td>&emsp;&emsp;&emsp;</td><td><input type="button" value="&nbsp;put&nbsp;"></td><td>&emsp;&emsp;&emsp;</td><td><input type="button" value="&nbsp;put&nbsp;"></td></tr>
                </table> 
         </td></tr></table>
     </body>
