@@ -8,8 +8,11 @@
             var current = new Array(25);//今のライト　on1,off-1
             var select = new Array(25);//選択状況
 
+            var n = 5;
+
             //n*nのマス用意する
-            function init(n) {
+            function init(num) {
+                n = num;
                 current = new Array(n*n);
                 select = new Array(n*n); 
                 // マス作成
@@ -32,11 +35,47 @@
                 }
             }
 
-            //マスをクリックしたときの処理（現在未実装）
+            //マスをクリックしたときの処理
             function selectMasu(event) {
                 // マスのインデックス取得
                 var index = Number(event.target.id.split("_")[1]);
+                
+                //クリックした箇所の反転
+                turnLight(index);
+                //クリックした箇所が左端じゃないなら左を反転
+                if(index % n != 0){
+                    turnLight(index-1);
+                }
+                //クリックした箇所が右端じゃないなら右を反転
+                if(index % n != n-1){
+                    turnLight(index+1);
+                }
+                //クリックした箇所が上端じゃないなら上を反転
+                if(index >= n){
+                    turnLight(index-n);
+                }
+                //クリックした箇所が下端じゃないなら下を反転
+                if(index < n*n - n){
+                    turnLight(index+n);
+                }
             }
+
+            //与えられたインデックスのマスを反転
+            function turnLight(index) {
+                //-1を掛けてライト反転
+                current[index] *= -1;
+                var masu = document.getElementById("masu_" + index);
+                
+                if(current[index]==1){//ライトon
+                    masu.classList.remove("off");
+                    masu.classList.add("on");
+                }else{//ライトoff
+                    masu.classList.remove("on");
+                    masu.classList.add("off");
+                }
+
+            }
+
 
         </script>
         <style>
@@ -50,7 +89,7 @@
                 border: 2px outset gray;
             }
             .off {background-color: black;}
-            .on {background-color: blue;}
+            .on {background-color: yellow;}
         </style>
     </head>
     <body onload="init(7)">
