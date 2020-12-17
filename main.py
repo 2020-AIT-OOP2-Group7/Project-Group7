@@ -18,9 +18,13 @@ def HanoiTower():
 def LightsOut():
     return render_template('LightsOut.html')
 
-@app.route('/MineSweeper')
-def MineSweeper():
-    return render_template('MineSweeper.html')
+@app.route('/MineSweeper_title')
+def MineSweeper_title():
+    return render_template('MineSweeper_title.html')
+
+@app.route('/MineSweeper_play')
+def MineSweeper_play():
+    return render_template('MineSweeper_play.html')
 
 if __name__ == '__main__':
     app.run()

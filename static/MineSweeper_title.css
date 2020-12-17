@@ -1,0 +1,36 @@
+a{
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: .4s;
+    font-size: 30px;
+}
+.easy_bottn{
+    color: #3ff75d;
+    border: solid 2px #3ff75d;
+}
+.normal_bottn{
+    color: #67c5ff;
+    border: solid 2px #67c5ff;
+}
+.hard_bottn{
+    color: brown;
+    border: solid 2px brown;
+}
+.return_bottn{
+    color: rgb(0, 0, 0);
+    border: solid 2px rgb(0, 0, 0);
+    position: absolute;
+    left: 200px;
+}
+li{
+    list-style: none;
+    margin-bottom: 40px;
+}
+.select{
+    text-align: center;
+}
+h1{
+    font-size: 60px;
+}
