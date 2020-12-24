@@ -2,7 +2,10 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>ライツアウト</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LightsOut_play</title>
+        <!--<link rel="stylesheet" href="{{ url_for('static', filename='LightsOut_play.css') }}"> -->
+        <link rel="stylesheet" href="../static/LightsOut_play.css">
         <script>
             var current = new Array();//今のライト　on1,off-1
             var select = new Array();//選択状況
@@ -22,7 +25,7 @@
 
                 //リセット
                 document.getElementById("game").innerHTML = "";
-                document.getElementById("message").innerText = n;////
+                document.getElementById("message").innerText = n;
                 // マス作成
                 for (var x=0; x<n; x++) {
                     for (var y=0; y<n; y++) {
@@ -43,7 +46,6 @@
 
                 //問題生成
                 var mode = document.getElementById("mode").value;
-                console.log(mode);////
                 //難易度によって反転する数を変える
                 if(mode == 1){
                     var num = n*n*0.2 + Math.floor(Math.random() * 3);
@@ -164,8 +166,17 @@
 
         </script>
         <style>
+            #main {
+                margin-left:auto;
+                margin-right:auto;
+                text-align:center;
+            }
             #messgae {color: red;}
-            #game {position: relative;}
+            #game {
+                max-width: 420px; /* 要素の幅を指定する*/
+                margin:0 auto; /* ブロック要素の中央揃え */
+                position: relative;
+            }
             #game div {
                 position: absolute;
                 line-height: 80px;
@@ -178,18 +189,18 @@
             .hint {background-color: pink;}
         </style>
     </head>
-    <body onload="init()">
-    <p>LightsOut</p>
-    <select name="mode" id="mode">
-        <option value="1">EASY</option>
-        <option value="2">NORMAL</option>
-        <option value="3">HARD</option>
-    </select>
-    <input type="number" id="number" min="3" max="10" value="5">
-    <input type="button" value="NEXT" onclick="init()">
-    <input type="button" value="RESET" onclick="resetQuestion()">
-    <input type="button" value="ANSWER" onclick="showAnswer()">
-    <span id="message"></span>
-    <div id="game"></div>
+    <body id="main" onload="init()">
+        <p>LightsOut</p>
+        <select name="mode" id="mode">
+            <option value="1">EASY</option>
+            <option value="2">NORMAL</option>
+            <option value="3">HARD</option>
+        </select>
+        <input type="number" id="number" min="3" max="10" value="5">
+        <input type="button" value="NEXT" onclick="init()">
+        <input type="button" value="RESET" onclick="resetQuestion()">
+        <input type="button" value="ANSWER" onclick="showAnswer()">
+        <span id="message"></span>
+        <div id="game"></div>
     </body>
 </html>
