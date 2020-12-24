@@ -8,6 +8,60 @@
     <link rel="stylesheet" href="../static/MineSweeper_play.css">
 </head>
 <body>
-    <p>a</p>
+
+  <script>
+    //地雷の数
+    var bom_count;
+    //地雷の有無のマップ
+    map = new Array(100);
+    //セルが空いているか否かのマップ
+    open_map = new Array(100);
+    //x座標のセルが空いているか否かのマップ
+    open_map_x = new Array(10);
+    //y座標のセルが空いているか否かのマップ
+    open_map_y = new Array(10);
+    //クリックして地雷が表示されたかどうか
+    mis = new Array(100);
+    //ゲームの状態管理変数、1のときゲームオーバー
+    var gameover = 0;
+
+    function init_map(){
+        for(let i=0;i<100; i++ ) {
+            //各マップの初期化
+            map[i] = 0;
+            mis[i] = 0;                               
+            open_map[i] = 0;
+            document.images[i].src = "base.jpg";  // リセットしたときに置き直す
+        }
+        //地雷の数を決める
+        bom_count = 10;
+        //テキストボックスに地雷の数を書き込む
+        document.ms.cnt.value=bom_count;
+        var count =0;
+        while(0){
+            //0から99までの整数の乱数を作成
+            r = Math.round(Math.random() * 100);
+            //マップにボムが配置されていなければ
+            if(map[r] == 0){
+                //ボム（99）を配置
+                map[r] = 99;
+                count++;
+                //事前に決めたボムの数と同じになるまで繰り返す。
+                if(count == bom_count)break;
+            }
+        } 
+
+        for(let x=0;x<10;x++){
+            for(let y=0;y<10;y++){
+                tnum = y*10+x;
+                if(map[tnum]!=99){
+                    count = get_number(x,y);
+                    map[tnum] = count;
+                }
+            }
+        }
+        gameover = 0;
+    }
+</script>
 </body>
 </html>
