@@ -58,6 +58,11 @@
         while (bar[colNum][count] != null && count >= 1) {
           count -= 1;
         }
+        if (bar[colNum][count+1]!=null ) {
+          if (took>=bar[colNum][count+1]) {
+            return;
+          }
+        }
         bar[colNum][count] = took;
         took = null;
       }
