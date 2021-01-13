@@ -1,18 +1,301 @@
 <html>
-    <head>
-        <title>Tower Of Hanoi</title>
-        <script></script>
-    </head>
-    <body>
-        <h1 align = "center"> Tower Of HANOI</h1>
-        <table align="center"><tr align="center"><td align="center">
-            <table>
-                <tr><td>■□□</td><td>　　　</td><td>□□□</td><td>　　　</td><td>□□□</td></tr>
-                <tr><td>■■□</td><td>　　　</td><td>□□□</td><td>　　　</td><td>□□□</td></tr>
-                <tr><td>■■■</td><td>　　　</td><td>□□□</td><td>　　　</td><td>□□□</td></tr>
-                <tr><td><input type="button" value="take"></td><td>　　　</td><td><input type="button" value="take"></td><td>　　　</td><td><input type="button" value="take"></td></tr>
-                <tr><td><input type="button" value=" put "></td><td>　　　</td><td><input type="button" value=" put "></td><td>　　　</td><td><input type="button" value=" put "></td></tr>
-               </table> 
-        </td></tr></table>
-    </body>
+
+<head>
+  <title>Tower Of Hanoi</title>
+  <script>
+    bar = [
+      [1, 2, 3],
+      [null, null, null],
+      [null, null, null]
+    ]
+    /*
+      見かけ上は
+
+       1 N N
+       2 N N
+       3 N N
+       */
+    took = null;
+
+    function getNum(colNum) { //板を取るところ
+      count = 0;
+      while (took == null && count <= 3) {
+        console.log("took: bar["+colNum+"]["+count+"]");
+        console.log("tooNum="+bar[colNum][count]);
+        took = bar[colNum][count];
+        count += 1;
+      }
+      if (took != null) {
+        bar[colNum][count - 1] = null;
+      }
+      if (count > 3) {
+        took = null;
+      }
+      PassAct();
+      document.getElementById("take1").className = "passive";
+      document.getElementById("put1").className = "active";
+      document.getElementById("take2").className = "passive";
+      document.getElementById("put2").className = "active";
+      document.getElementById("take3").className = "passive";
+      document.getElementById("put3").className = "active";
+      count = 0;
+      console.log("took:" +took);
+      console.log("bar[0][0]"+bar[0][0]);
+      console.log("bar[0][1]"+bar[0][1]);
+      console.log("bar[0][2]"+bar[0][2]);
+      console.log("bar[1][0]"+bar[1][0]);
+      console.log("bar[1][1]"+bar[1][1]);
+      console.log("bar[1][2]"+bar[1][2]);
+      console.log("bar[2][0]"+bar[2][0]);
+      console.log("bar[2][1]"+bar[2][1]);
+      console.log("bar[2][2]"+bar[2][2]);
+      console.log("-----------------------------------------------");
+    }
+
+    function putNum(colNum) { //板を置くところ
+      if (took != null) {
+        count = 2;
+        while (bar[colNum][count] != null && count >= 1) {
+          count -= 1;
+        }
+        if (bar[colNum][count+1]!=null ) {
+          if (took>=bar[colNum][count+1]) {
+            return;
+          }
+        }
+        bar[colNum][count] = took;
+        took = null;
+      }
+
+      PassAct();
+      document.getElementById("take1").className = "active";
+      document.getElementById("put1").className = "passive";
+      document.getElementById("take2").className = "active";
+      document.getElementById("put2").className = "passive";
+      document.getElementById("take3").className = "active";
+      document.getElementById("put3").className = "passive";
+      count = 0;
+      console.log("took:" +took);
+      console.log("bar[0][0]"+bar[0][0]);
+      console.log("bar[0][1]"+bar[0][1]);
+      console.log("bar[0][2]"+bar[0][2]);
+      console.log("bar[1][0]"+bar[1][0]);
+      console.log("bar[1][1]"+bar[1][1]);
+      console.log("bar[1][2]"+bar[1][2]);
+      console.log("bar[2][0]"+bar[2][0]);
+      console.log("bar[2][1]"+bar[2][1]);
+      console.log("bar[2][2]"+bar[2][2]);
+      console.log("-----------------------------------------------");
+    }
+
+
+
+    function PassAct() {
+      if (bar[0][0] == 1) {
+        document.getElementById("b00_1").className = "active";
+        document.getElementById("b00_0").className = "passive";
+      } else {
+        document.getElementById("b00_1").className = "passive";
+        document.getElementById("b00_0").className = "active";
+      }
+
+      if (bar[0][1] == 2) {
+        document.getElementById("b01_2").className = "active";
+        document.getElementById("b01_1").className = "passive";
+        document.getElementById("b01_0").className = "passive";
+      } else if (bar[0][1] == 1) {
+        document.getElementById("b01_2").className = "passive";
+        document.getElementById("b01_1").className = "active";
+        document.getElementById("b01_0").className = "passive";
+      } else {
+        document.getElementById("b01_2").className = "passive";
+        document.getElementById("b01_1").className = "passive";
+        document.getElementById("b01_0").className = "active";
+      }
+
+      if (bar[0][2] == 3) {
+        document.getElementById("b02_3").className = "active";
+        document.getElementById("b02_2").className = "passive";
+        document.getElementById("b02_1").className = "passive";
+        document.getElementById("b02_0").className = "passive";
+      } else if (bar[0][2] == 2) {
+        document.getElementById("b02_3").className = "passive";
+        document.getElementById("b02_2").className = "active";
+        document.getElementById("b02_1").className = "passive";
+        document.getElementById("b02_0").className = "passive";
+      } else if (bar[0][2] == 1) {
+        document.getElementById("b02_3").className = "passive";
+        document.getElementById("b02_2").className = "passive";
+        document.getElementById("b02_1").className = "active";
+        document.getElementById("b02_0").className = "passive";
+      } else {
+        document.getElementById("b02_3").className = "passive";
+        document.getElementById("b02_2").className = "passive";
+        document.getElementById("b02_1").className = "passive";
+        document.getElementById("b02_0").className = "active";
+      }
+
+
+      if (bar[1][0] == 1) {
+        document.getElementById("b10_1").className = "active";
+        document.getElementById("b10_0").className = "passive";
+      } else {
+        document.getElementById("b10_1").className = "passive";
+        document.getElementById("b10_0").className = "active";
+      }
+
+      if (bar[1][1] == 2) {
+        document.getElementById("b11_2").className = "active";
+        document.getElementById("b11_1").className = "passive";
+        document.getElementById("b11_0").className = "passive";
+      } else if (bar[1][1] == 1) {
+        document.getElementById("b11_2").className = "passive";
+        document.getElementById("b11_1").className = "active";
+        document.getElementById("b11_0").className = "passive";
+      } else {
+        document.getElementById("b11_2").className = "passive";
+        document.getElementById("b11_1").className = "passive";
+        document.getElementById("b11_0").className = "active";
+      }
+
+      if (bar[1][2] == 3) {
+        document.getElementById("b12_3").className = "active";
+        document.getElementById("b12_2").className = "passive";
+        document.getElementById("b12_1").className = "passive";
+        document.getElementById("b12_0").className = "passive";
+      } else if (bar[1][2] == 2) {
+        document.getElementById("b12_3").className = "passive";
+        document.getElementById("b12_2").className = "active";
+        document.getElementById("b12_1").className = "passive";
+        document.getElementById("b12_0").className = "passive";
+      } else if (bar[1][2] == 1) {
+        document.getElementById("b12_3").className = "passive";
+        document.getElementById("b12_2").className = "passive";
+        document.getElementById("b12_1").className = "active";
+        document.getElementById("b12_0").className = "passive";
+      } else {
+        document.getElementById("b12_3").className = "passive";
+        document.getElementById("b12_2").className = "passive";
+        document.getElementById("b12_1").className = "passive";
+        document.getElementById("b12_0").className = "active";
+      }
+
+
+      if (bar[2][0] == 1) {
+        document.getElementById("b20_1").className = "active";
+        document.getElementById("b20_0").className = "passive";
+      } else {
+        document.getElementById("b20_1").className = "passive";
+        document.getElementById("b20_0").className = "active";
+      }
+      if (bar[2][1] == 2) {
+        document.getElementById("b21_2").className = "active";
+        document.getElementById("b21_1").className = "passive";
+        document.getElementById("b21_0").className = "passive";
+      } else if (bar[2][1] == 1) {
+        document.getElementById("b21_2").className = "passive";
+        document.getElementById("b21_1").className = "active";
+        document.getElementById("b21_0").className = "passive";
+      } else {
+        document.getElementById("b21_2").className = "passive";
+        document.getElementById("b21_1").className = "passive";
+        document.getElementById("b21_0").className = "active";
+      }
+
+      if (bar[2][2] == 3) {
+        document.getElementById("b22_3").className = "active";
+        document.getElementById("b22_2").className = "passive";
+        document.getElementById("b22_1").className = "passive";
+        document.getElementById("b22_0").className = "passive";
+      } else if (bar[2][2] == 2) {
+        document.getElementById("b22_3").className = "passive";
+        document.getElementById("b22_2").className = "active";
+        document.getElementById("b22_1").className = "passive";
+        document.getElementById("b22_0").className = "passive";
+      } else if (bar[2][2] == 1) {
+        document.getElementById("b22_3").className = "passive";
+        document.getElementById("b22_2").className = "passive";
+        document.getElementById("b22_1").className = "active";
+        document.getElementById("b22_0").className = "passive";
+      } else {
+        document.getElementById("b22_3").className = "passive";
+        document.getElementById("b22_2").className = "passive";
+        document.getElementById("b22_1").className = "passive";
+        document.getElementById("b22_0").className = "active";
+      }
+
+    }
+  </script>
+  <style>
+    .active {
+      display: block;
+    }
+
+    .passive {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 align="center"> Tower Of HANOI</h1>
+  <table align="center">
+    <tr align="center">
+      <td align="center">
+        <table>
+          <tr>
+            <td id="b00_1" class="active">■□□</td>
+            <td id="b00_0" class="passive">□□□</td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td id="b10_1" class="passive">■□□</td>
+            <td id="b10_0" class="active">□□□</td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td id="b20_1" class="passive">■□□</td>
+            <td id="b20_0" class="active">□□□</td>
+          </tr>
+          <tr>
+            <td id="b01_2" class="active">■■□</td>
+            <td id="b01_1" class="passive">■□□</td>
+            <td id="b01_0" class="passive">□□□</td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td id="b11_2" class="passive">■■□</td>
+            <td id="b11_1" class="passive">■□□</td>
+            <td id="b11_0" class="active">□□□</td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td id="b21_2" class="passive">■■□</td>
+            <td id="b21_1" class="passive">■□□</td>
+            <td id="b21_0" class="active">□□□</td>
+          </tr>
+          <tr>
+            <td id="b02_3" class="active">■■■</td>
+            <td id="b02_2" class="passive">■■□</td>
+            <td id="b02_1" class="passive">■□□</td>
+            <td id="b02_0" class="passive">□□□</td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td id="b12_3" class="passive">■■■</td>
+            <td id="b12_2" class="passive">■■□</td>
+            <td id="b12_1" class="passive">■□□</td>
+            <td id="b12_0" class="active">□□□</td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td id="b22_3" class="passive">■■■</td>
+            <td id="b22_2" class="passive">■■□</td>
+            <td id="b22_1" class="passive">■□□</td>
+            <td id="b22_0" class="active">□□□</td>
+          </tr>
+          <tr>
+            <td class="active" id="take1"><input type="button" value="take" onclick="getNum(0);"></td>
+            <td class="passive" id="put1"><input type="button" value="&nbsp;put&nbsp;" onclick="putNum(0);"></td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td class="active" id="take2"><input type="button" value="take" onclick="getNum(1);"></td>
+            <td class="passive" id="put2"><input type="button" value="&nbsp;put&nbsp;" onclick="putNum(1);"></td>
+            <td>&emsp;&emsp;&emsp;</td>
+            <td class="active" id="take3"><input type="button" value="take" onclick="getNum(2);"></td>
+            <td class="passive" id="put3"><input type="button" value="&nbsp;put&nbsp;" onclick="putNum(2);"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
 </html>

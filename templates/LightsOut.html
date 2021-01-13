@@ -4,16 +4,26 @@
         <meta charset="UTF-8">
         <title>ライツアウト</title>
         <script>
-            //マスは最初は5*5にする
-            var current = new Array(25);//今のライト　on1,off-1
-            var select = new Array(25);//選択状況
+            var current = new Array();//今のライト　on1,off-1
+            var select = new Array();//選択状況
+            var question = new Array(); //問題
+            var answer = new Array();//答え
+
+            var n;
 
             //n*nのマス用意する
-            function init(n) {
+            function init() {
+                n = document.getElementById("number").value;
+                n = parseInt(n);
                 current = new Array(n*n);
-                select = new Array(n*n); 
-                // マス作成
+                select = new Array(n*n);
+                question = new Array(n*n);
+                answer = new Array(n*n);
+
+                //リセット
                 document.getElementById("game").innerHTML = "";
+                document.getElementById("message").innerText = n;////
+                // マス作成
                 for (var x=0; x<n; x++) {
                     for (var y=0; y<n; y++) {
                         var masu = document.createElement("div");
@@ -30,12 +40,126 @@
                     current[i] = 1;
                     select[i] = 1;
                 }
+
+                //問題生成
+                var mode = document.getElementById("mode").value;
+                console.log(mode);////
+                //難易度によって反転する数を変える
+                if(mode == 1){
+                    var num = n*n*0.2 + Math.floor(Math.random() * 3);
+                }else if(mode == 2){
+                    var num = n*n*0.4 + Math.floor(Math.random() * 3);
+                }else{
+                    var num = n*n*0.6 + Math.floor(Math.random() * 3);
+                }
+                
+                //フィッシャーイェーツのアルゴリズムでシャッフル
+                var array = [...Array(n*n).keys()]
+                for(i = array.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var tmp = array[i];
+                    array[i] = array[j];
+                    array[j] = tmp;
+                }
+                //シャッフルした配列を前からnum個用意してランダムなパネルを反転する。反転するパネルの数を任意に調節できる
+                for(var i=0; i<num; i++){
+                    answer[array[i]] = -1
+                    xLight(array[i]);
+                }
+
+                // 問題を格納
+                for (var i=0; i<n*n; i++) {
+                    question[i] = current[i];
+                }
+                // メッセージのクリア
+                document.getElementById("message").innerText = "";
+
             }
 
-            //マスをクリックしたときの処理（現在未実装）
+            //マスをクリックしたときの処理
             function selectMasu(event) {
                 // マスのインデックス取得
                 var index = Number(event.target.id.split("_")[1]);
+                // 選択処理
+                select[index] *= -1;
+                event.target.classList.remove("hint");
+                
+                xLight(index);
+
+                // クリア判定
+                if (current.indexOf(-1) == -1) {
+                    document.getElementById("message").innerText = "CLEAR!";
+                } else {
+                    document.getElementById("message").innerText = "";
+                }
+            }
+
+            //上下左右も反転する
+            function xLight(index){
+                //クリックした箇所の反転
+                turnLight(index);
+                //クリックした箇所が左端じゃないなら左を反転
+                if(index % n != 0){
+                    turnLight(index-1);
+                }
+                //クリックした箇所が右端じゃないなら右を反転
+                if(index % n != n-1){
+                    turnLight(index+1);
+                }
+                //クリックした箇所が上端じゃないなら上を反転
+                if(index >= n){
+                    turnLight(index-n);
+                }
+                //クリックした箇所が下端じゃないなら下を反転
+                if(index < n*n - n){
+                    turnLight(index+n);
+                }
+            }
+
+            //与えられたインデックスのマスを反転
+            function turnLight(index) {
+                //-1を掛けてライト反転
+                current[index] *= -1;
+                var masu = document.getElementById("masu_" + index);
+                
+                if(current[index]==1){//ライトon
+                    masu.classList.remove("off");
+                    masu.classList.add("on");
+                }else{//ライトoff
+                    masu.classList.remove("on");
+                    masu.classList.add("off");
+                }
+
+            }
+
+            function showAnswer() {
+            // 解答の表示
+                for (var i=0; i<n*n; i++) {
+                    var masu = document.getElementById("masu_" + i);
+                    if (((answer[i] == -1)&&(select[i] == 1)) ||
+                        ((answer[i] == 1)&&(select[i] == -1))) {
+                            masu.classList.add("hint");
+                        }
+                }
+            }
+
+            function resetQuestion() {
+            // 問題のリセット
+                for (var i=0; i<n*n; i++) {
+                    current[i] = question[i];
+                    select[i] = 1;
+                    var masu = document.getElementById("masu_" + i);
+                    masu.classList.remove("hint");
+                    if (question[i] == 1 ) {
+                        masu.classList.remove("off");
+                        masu.classList.add("on");
+                    } else {
+                        masu.classList.remove("on");
+                        masu.classList.add("off");
+                    }
+                }
+                // メッセージのクリア
+                document.getElementById("message").innerText = "";
             }
 
         </script>
@@ -50,11 +174,22 @@
                 border: 2px outset gray;
             }
             .off {background-color: black;}
-            .on {background-color: blue;}
+            .on {background-color: yellow;}
+            .hint {background-color: pink;}
         </style>
     </head>
-    <body onload="init(7)">
-    <p>ライツアウト</p>
+    <body onload="init()">
+    <p>LightsOut</p>
+    <select name="mode" id="mode">
+        <option value="1">EASY</option>
+        <option value="2">NORMAL</option>
+        <option value="3">HARD</option>
+    </select>
+    <input type="number" id="number" min="3" max="10" value="5">
+    <input type="button" value="NEXT" onclick="init()">
+    <input type="button" value="RESET" onclick="resetQuestion()">
+    <input type="button" value="ANSWER" onclick="showAnswer()">
+    <span id="message"></span>
     <div id="game"></div>
     </body>
 </html>

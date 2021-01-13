@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ゲーム選択</title>
+  <title>ゲーム選択画面</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
 <body>
-  <h1>ゲーム選択</h1>
-  <ol>
-    <li><a href="/HanoiTower">ハノイの塔</a></li>
-    <li><a href="/LightsOut">ライツアウト</a></li>
-    <li><a href="/MineSweeper">マインスイーパー</a></li>
-  </ol>
+  <main>
+      <h1>ゲーム選択</h1>
+        <button onclick="location.href='./HanoiTower'">HanoiTower</button>
+        <button onclick="location.href='./LightsOut'">LightsOut</button>
+        <button onclick="location.href='./MineSweeper_title'">MineSweeper</button>
+  </main>
 </body>
 </html>
