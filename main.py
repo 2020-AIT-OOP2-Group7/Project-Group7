@@ -26,5 +26,13 @@ def MineSweeper_title():
 def MineSweeper_play():
     return render_template('MineSweeper_play.html')
 
+@app.route('/MineSweeper_play_normal')
+def MineSweeper_play_normal():
+    return render_template('MineSweeper_play_normal.html')
+
+@app.route('/MineSweeper_play_hard')
+def MineSweeper_play_hard():
+    return render_template('MineSweeper_play_hard.html')
+
 if __name__ == '__main__':
     app.run()

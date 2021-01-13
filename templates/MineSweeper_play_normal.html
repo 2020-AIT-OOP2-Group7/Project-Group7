@@ -11,15 +11,15 @@
         //地雷の数
         var bom_c;
         //地雷の有無のマップ
-        map = new Array(100);
+        map = new Array(256);
         //セルが開いているかどうか
-        op_map = new Array(100);
+        op_map = new Array(256);
         //x座標の開けるマップ
-        op_mapx = new Array(10);
+        op_mapx = new Array(16);
         //y座標の開けるマップ
-        op_mapy = new Array(10);
+        op_mapy = new Array(16);
         //右クリックをして、地雷を表示されたかどうか
-        mis = new Array(100);
+        mis = new Array(256);
         //ゲーム状態管理、１のときゲームオーバー
         var game_over = 0;
         //ゲーム経過時間
@@ -32,7 +32,7 @@
             
         //マップを作る
         function init_map(){
-            for( i=0;i<100; i++ ) {
+            for( i=0;i<256; i++ ) {
                 map[i] = 0;
                 mis[i] = 0;
                 op_map[i] = 0;
@@ -42,12 +42,12 @@
             count = 0;            
             // 地雷の数を決める
             //bom_c = Math.round(Math.random() * 5)+10;
-            bom_c = 15;
+            bom_c = 40;
             // テキストボックスに地雷の数を書き込む
             document.ms.cnt.value=bom_c;         
             cnt = 0;
             while(true) {
-                r = Math.round(Math.random() * 100);
+                r = Math.round(Math.random() * 256);
                 if( map[r] == 0 ) {
                     map[r] = 99;
                     cnt++;
@@ -55,9 +55,9 @@
         
                 }
             }
-            for( x=0;x<10;x++ ) {
-                for( y=0;y<10;y++ ) {
-                    tnum = y*10+x;
+            for( x=0;x<16;x++ ) {
+                for( y=0;y<16;y++ ) {
+                    tnum = y*16+x;
                     if( map[tnum] != 99 ) {
                         cnt = get_cnt(x,y);
                         map[tnum] = cnt;
@@ -72,43 +72,43 @@
             // 左端でないなら（左端ならしない）
             if( x > 0 ) {                  
                 // 左をチェック      
-                num = y * 10 + ( x - 1 );  
+                num = y * 16 + ( x - 1 );  
                 if( map[num] == 99 ) tmp_cnt++;
                 // 左上をチェック
                 if( y > 0 ) {              
-                    num = ( y - 1 ) * 10 + x - 1;
+                    num = ( y - 1 ) * 16 + x - 1;
                     if( map[num] == 99 ) tmp_cnt++;
                 }
                 // 左下をチェック
-                if( y < 9 ) {              
-                    num = ( y + 1 ) * 10 + x - 1;    
+                if( y < 15 ) {              
+                    num = ( y + 1 ) * 16 + x - 1;    
                     if( map[num] == 99 ) tmp_cnt++;
                 }
             }
             // 右端でないなら(右端ならしない)        
-            if( x < 9 ) {                  
+            if( x < 15 ) {                  
                 // 右をチェック              
-                num = y * 10 + ( x + 1 );  
+                num = y * 16 + ( x + 1 );  
                 if( map[num] == 99 ) tmp_cnt++;
                 // 右上をチェック                
                 if( y > 0 ) {              
-                    num = ( y - 1 ) * 10 + x + 1;        
+                    num = ( y - 1 ) * 16 + x + 1;        
                     if( map[num] == 99 ) tmp_cnt++;        
                 }        
                 // 右下をチェック        
-                if( y < 9 ) {              
-                    num = ( y + 1 ) * 10 + x + 1;        
+                if( y < 15 ) {              
+                    num = ( y + 1 ) * 16 + x + 1;        
                     if( map[num] == 99 ) tmp_cnt++;        
                 }        
             }        
             // 上端でないなら、真上をチェック(上端ならしない)        
             if( y > 0 ) {      
-                num = ( y - 1 ) * 10 + x;
+                num = ( y - 1 ) * 16 + x;
                 if( map[num] == 99 ) tmp_cnt++;
             }
             // 下端でないなら、真下をチェック(下端ならしない)        
-            if( y < 9 ) {      
-                num = ( y + 1 ) * 10 + x;        
+            if( y < 15 ) {      
+                num = ( y + 1 ) * 16 + x;        
                 if( map[num] == 99 ) tmp_cnt++;        
             }                        
             return( tmp_cnt );        
@@ -119,7 +119,7 @@
             if( game_over == 1 ) {        
                 alert("リセットしてやり直してください");
             }
-            num = y*10+x;
+            num = y*16+x;
             // 開いてたら戻る
             if( op_map[num] == 1 ) return;
             // マップを開く
@@ -133,7 +133,7 @@
             }
             // クリアチェック
             cnt = 0;
-            for( i=0;i<100;i++ ) {        
+            for( i=0;i<256;i++ ) {        
                 // 開いてないマップの数をカウント        
                 if( op_map[i] == 0 ) cnt++;　
             }        
@@ -147,7 +147,7 @@
         }
         // 地雷を開く
         function open_bom(){         
-            for( i=0;i<100;i++ ) {        
+            for( i=0;i<256;i++ ) {        
                 //　misが1かつmapが99でないとき        
                 if( ( mis[i] == 1 ) && ( map[i] != 99 ) ){
                     //　地雷×の画像に置き換える             
@@ -164,7 +164,7 @@
             op_cnt2 = 1;
             op_mapx[0] = x;        
             op_mapy[0] = y;
-            num = y*10+x;
+            num = y*16+x;
             op_map[num] = 1;
             //wdata = map[num]+"{{ url_for('static', filename='.jpg') }}";
             wdata = image_map(map[num]);
@@ -214,7 +214,7 @@
                         check( op_mapx[i]-1,op_mapy[i] );
                     }
                     // 右をチェック
-                    if( op_mapx[i] < 9 ) {      
+                    if( op_mapx[i] < 15 ) {      
                         check( op_mapx[i]+1,op_mapy[i] );
                     }
                     // 上をチェック
@@ -222,7 +222,7 @@
                         check( op_mapx[i],op_mapy[i]-1 );
                     }
                     // 下をチェック
-                    if( op_mapy[i] < 9 ) {      
+                    if( op_mapy[i] < 15 ) {      
                         check( op_mapx[i],op_mapy[i]+1 );
                     }
                 }
@@ -232,7 +232,7 @@
 
         // 上下左右をチェックする
         function check(x,y){         
-            num = y*10+x;
+            num = y*16+x;
             if( op_map[num] == 1 ) return;
             // ０の時
             if( map[num] == 0 ) {       
@@ -250,7 +250,7 @@
         }
         //右クリックしたとき、地雷を表示
         function change(x,y){   
-            num = y*10+x;
+            num = y*16+x;
             // すでに開いているとき
             if(op_map[num]==1){                
                 // 中止
@@ -277,9 +277,9 @@
         <h1>MineSweeper</h1>
         <table class="center"><tr><td>
             <script>
-                for(i=0;i<10;i++) {
-                    for(j=0;j<10;j++) {
-                        document.write('<a href=JavaScript:put(',j,',',i,')><img src=base.jpg oncontextmenu="change(',j,',',i,');return false" width=50 height=50></a>');
+                for(i=0;i<16;i++) {
+                    for(j=0;j<16;j++) {
+                        document.write('<a href=JavaScript:put(',j,',',i,')><img src=base.jpg oncontextmenu="change(',j,',',i,');return false" width=40 height=40></a>');
                     }
                     document.write("<br>\n");
                 }
