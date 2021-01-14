@@ -14,9 +14,13 @@ def index():
 def HanoiTower():
     return render_template('HanoiTower.html')
 
-@app.route('/LightsOut')
-def LightsOut():
-    return render_template('LightsOut.html')
+@app.route('/LightsOut_title')
+def LightsOut_title():
+    return render_template('LightsOut_title.html')
+
+@app.route('/LightsOut_play')
+def LightsOut_play():
+    return render_template('LightsOut_play.html')
 
 @app.route('/MineSweeper_title')
 def MineSweeper_title():
